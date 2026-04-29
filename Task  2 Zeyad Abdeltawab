@@ -1,0 +1,28 @@
+from textblob import TextBlob
+
+# function for sentiment analysis
+def check_sentiment(sentence):
+    
+    analysis = TextBlob(sentence)
+    polarity = analysis.sentiment.polarity
+    
+    if polarity > 0:
+        print("Sentiment: Positive 😊")
+        
+    elif polarity < 0:
+        print("Sentiment: Negative 😡")
+        
+    else:
+        print("Sentiment: Neutral 😐")
+
+
+# main program
+while True:
+    
+    text = input("Enter a sentence (or type 'exit' to stop): ")
+    
+    if text.lower() == "exit":
+        print("Program ended.")
+        break
+    
+    check_sentiment(text)
