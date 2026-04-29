@@ -1,0 +1,23 @@
+import pandas as pd
+from transformers import pipeline
+
+
+cols = ['sentiment', 'id', 'date', 'query', 'user', 'text']
+df_twitter = pd.read_csv("training.1600000.processed.noemoticon.csv", 
+                         header=None, 
+                         names=cols, 
+                         encoding='latin-1')
+
+
+classifier = pipeline("sentiment-analysis")
+
+
+print("--- Twitter Sentiment Analysis ---")
+for index, row in df_twitter.head(5).iterrows():
+    result = classifier(row['text'])[0]
+    
+ 
+    actual = "NEGATIVE" if row['sentiment'] == 0 else "POSITIVE"
+    
+    print(f"Tweet: {row['text']}")
+    print(f"Actual: {actual} | Predicted: {result['label']} ({result['score']:.2f})\n")
